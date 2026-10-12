@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AL KHAIL SIGN GOLG - Professional Signboards & Advertising</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #ffffff; color: #111111; direction: ltr; text-align: left; padding: 10px; }
+        
+        /* Header Layout: Name/Details on Left, Circular Logo on Right */
+        header { background: #000000; color: #ffffff; padding: 20px; border-bottom: 3px solid #000; }
+        .header-container { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        
+        .header-info { flex: 1; text-align: left; }
+        .header-info h1 { font-size: 22px; color: #ffffff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+        .header-info h2.arabic-name { font-size: 18px; color: #cccccc; font-family: 'Amiri', 'Traditional Arabic', serif; direction: rtl; text-align: left; margin-bottom: 5px; }
+        .header-info p.location { font-size: 13px; color: #00ffcc; margin-bottom: 4px; font-weight: bold; }
+        .header-info p.contact { font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 8px; }
+        .header-info p.services-desc { font-size: 12px; color: #dddddd; font-style: italic; }
+
+        /* Header Right Side Circular Logo */
+        .header-logo-box { width: 85px; height: 85px; border-radius: 50%; overflow: hidden; border: 3px solid #ffffff; background: #333; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .header-logo-box img { width: 100%; height: 100%; object-fit: cover; display: none; }
+
+        /* New Arrival Landscape Banner */
+        .new-arrival-wrapper { max-width: 650px; margin: 20px auto; background: #ffffff; padding: 15px; border: 1px solid #000000; text-align: center; }
+        .new-arrival-wrapper h2 { font-size: 18px; color: #000000; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #000; padding-bottom: 5px; }
+        .banner-media { width: 100%; max-height: 280px; object-fit: cover; margin-bottom: 12px; display: block; background: #000; }
+        
+        .banner-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .action-btn { padding: 10px 15px; background: #000000; color: #ffffff; text-decoration: none; font-weight: bold; font-size: 13px; flex: 1; min-width: 140px; text-align: center; border: 1px solid #000; }
+        .action-btn:hover { background: #333333; }
+
+        /* Main Layout */
+        .main-container { display: flex; flex-direction: column; gap: 20px; max-width: 1100px; margin: 0 auto; }
+
+        /* Posts Section */
+        .posts-section { order: 1; background: #ffffff; padding: 15px; border: 1px solid #cccccc; flex: 2; }
+        .posts-section h2 { margin-bottom: 15px; font-size: 20px; color: #000000; border-bottom: 2px solid #000000; padding-bottom: 5px; text-transform: uppercase; }
+        
+        .post-card { margin-bottom: 20px; border: 1px solid #000000; background: #ffffff; padding: 12px; }
+        .post-card img, .post-card video { width: 100%; max-height: 320px; object-fit: contain; margin-bottom: 10px; display: block; background: #000; }
+        .post-card h3 { font-size: 18px; color: #000000; margin-bottom: 5px; }
+        .post-card p { font-size: 14px; color: #444444; margin-bottom: 12px; }
+        
+        .post-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+        .post-btn { flex: 1; min-width: 120px; padding: 9px; text-align: center; background: #000000; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: bold; border: 1px solid #000000; }
+        .post-btn:hover { background: #333333; }
+
+        /* Categories & Live Chat Section */
+        .sidebar-section { order: 2; background: #ffffff; padding: 15px; border: 1px solid #cccccc; flex: 1; }
+        .sidebar-section h3 { margin-bottom: 10px; font-size: 18px; color: #000000; border-bottom: 1px solid #000; padding-bottom: 4px; }
+        .categories-list, .chat-box { margin-bottom: 20px; }
+        
+        .category-btn, .chat-btn { display: block; width: 100%; padding: 12px; margin-bottom: 8px; background: #000000; color: #ffffff; text-align: center; text-decoration: none; font-weight: bold; border: 1px solid #000000; transition: 0.2s; }
+        .category-btn:hover, .chat-btn:hover { background: #333333; }
+
+        @media (min-width: 768px) {
+            .main-container { flex-direction: row; }
+            .posts-section { order: 1; }
+            .sidebar-section { order: 2; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <div class="header-info">
+                <h1>Welcome to AL KHAIL SIGN GOLG</h1>
+                <h2 class="arabic-name">خطاط الخيل ذهبي</h2>
+                <p class="location">📍 Location: Sultanate of Oman</p>
+                <p class="contact">📞 WhatsApp: +968 98577257</p>
+                <p class="services-desc">All kind of 3D sign board and printing and designing solution</p>
+            </div>
+            <!-- Circular Logo on Right Side -->
+            <div class="header-logo-box">
+                <img id="headerLogoImg" src="" alt="Logo">
+            </div>
+        </div>
+    </header>
+
+    <!-- New Arrival Banner Section -->
+    <div class="new-arrival-wrapper">
+        <h2>New Arrival</h2>
+        <div id="bannerContainer">
+            <p style="color:#777; padding: 20px;">Please upload New Arrival banner from Admin Panel.</p>
+        </div>
+        <div class="banner-buttons">
+            <a href="https://wa.me/96898577257?text=Hello,%20I%20want%20to%20customize%20my%20banner." target="_blank" class="action-btn">Customize Your Banner</a>
+            <a href="https://wa.me/96898577257?text=Hello,%20I%20want%20to%20get%20a%20quote." target="_blank" class="action-btn">Get a Quote</a>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="main-container">
+        
+        <!-- Posts Section -->
+        <section class="posts-section">
+            <h2>Latest Posts</h2>
+            <div id="posts-container">
+                <!-- Posts will load dynamically here -->
+            </div>
+        </section>
+
+        <!-- Categories & Live Chat Section -->
+        <aside class="sidebar-section">
+            <div class="categories-list">
+                <h3>Categories & Services</h3>
+                <a href="https://wa.me/96898577257?text=I%20am%20interested%20in%203D%20Signboards" target="_blank" class="category-btn">3D Signboards</a>
+                <a href="https://wa.me/96898577257?text=I%20am%20interested%20in%20Printing%20Solutions" target="_blank" class="category-btn">Printing Solutions</a>
+                <a href="https://wa.me/96898577257?text=I%20am%20interested%20in%20Designing%20Services" target="_blank" class="category-btn">Designing Solutions</a>
+            </div>
+
+            <div class="chat-box">
+                <h3>Live Manager Chat</h3>
+                <a href="https://wa.me/96898577257?text=Hello,%20I%20want%20to%20chat%20with%20the%20manager." target="_blank" class="chat-btn">💬 Live WhatsApp Chat</a>
+            </div>
+        </aside>
+
+    </main>
+
+    <script>
+        function loadWebsiteData() {
+            // Load Admin Settings (Logo & Banner)
+            const settings = JSON.parse(localStorage.getItem('adminSettings')) || {};
+            
+            // Set Header Logo
+            const headerLogoImg = document.getElementById('headerLogoImg');
+            if (settings.logo) {
+                headerLogoImg.src = settings.logo;
+                headerLogoImg.style.display = 'block';
+            } else {
+                headerLogoImg.style.display = 'none';
+            }
+
+            // Set Banner
+            const bannerContainer = document.getElementById('bannerContainer');
+            if (settings.banner) {
+                if (settings.bannerType && settings.bannerType.includes('video')) {
+                    bannerContainer.innerHTML = `<video src="${settings.banner}" class="banner-media" controls autoplay muted loop></video>`;
+                } else {
+                    bannerContainer.innerHTML = `<img src="${settings.banner}" alt="New Arrival Banner" class="banner-media">`;
+                }
+            } else {
+                bannerContainer.innerHTML = `<p style="color:#777; padding:15px;">Please upload New Arrival banner from Admin Panel.</p>`;
+            }
+
+            // Load Posts
+            const container = document.getElementById('posts-container');
+            const savedPosts = JSON.parse(localStorage.getItem('adminPosts')) || [];
+
+            if (savedPosts.length > 0) {
+                container.innerHTML = '';
+                savedPosts.forEach(post => {
+                    let mediaHtml = '';
+                    if (post.type && post.type.includes('video')) {
+                        mediaHtml = `<video src="${post.media}" controls></video>`;
+                    } else if (post.media) {
+                        mediaHtml = `<img src="${post.media}" alt="Post Image">`;
+                    }
+
+                    const postElement = document.createElement('div');
+                    postElement.className = 'post-card';
+                    postElement.innerHTML = `
+                        ${mediaHtml}
+                        <h3>${post.title || ''}</h3>
+                        <p>${post.description || ''}</p>
+                        <div class="post-buttons">
+                            <a href="https://wa.me/96898577257?text=I%20want%20to%20customize%20banner%20for%20post:%20${encodeURIComponent(post.title || '')}" target="_blank" class="post-btn">Customize Your Banner</a>
+                            <a href="https://wa.me/96898577257?text=I%20want%20a%20quote%20for%20post:%20${encodeURIComponent(post.title || '')}" target="_blank" class="post-btn">Get a Quote</a>
+                        </div>
+                    `;
+                    container.appendChild(postElement);
+                });
+            } else {
+                // Default Sample Post so buttons are visible immediately
+                container.innerHTML = `
+                    <div class="post-card">
+                        <h3>Sample 3D Signboard Design</h3>
+                        <p>High-quality 3D signboards and printing solutions tailored for your brand.</p>
+                        <div class="post-buttons">
+                            <a href="https://wa.me/96898577257?text=I%20want%20to%20customize%20banner%20for%20Sample%203D%20Signboard" target="_blank" class="post-btn">Customize Your Banner</a>
+                            <a href="https://wa.me/96898577257?text=I%20want%20a%20quote%20for%20Sample%203D%20Signboard" target="_blank" class="post-btn">Get a Quote</a>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        window.onload = loadWebsiteData;
+    </script>
+
+</body>
+</html>

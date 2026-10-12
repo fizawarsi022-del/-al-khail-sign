@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - AL KHAIL SIGN GOLG</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f4f4; color: #111111; direction: ltr; text-align: left; padding: 20px; }
+        
+        .admin-container { max-width: 800px; margin: 0 auto; background: #ffffff; padding: 25px; border: 2px solid #000000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { font-size: 24px; color: #000000; border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; text-align: center; }
+        
+        .section-box { background: #fafafa; border: 1px solid #ccc; padding: 20px; margin-bottom: 25px; }
+        .section-box h2 { font-size: 18px; color: #000; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px; text-transform: uppercase; }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; color: #333; }
+        input[type="text"], textarea, input[type="file"] { width: 100%; padding: 10px; border: 1px solid #000; font-size: 14px; background: #fff; }
+        textarea { resize: vertical; height: 80px; }
+        
+        .admin-btn { display: block; width: 100%; padding: 12px; background: #000000; color: #ffffff; border: none; font-size: 15px; font-weight: bold; cursor: pointer; text-align: center; text-transform: uppercase; }
+        .admin-btn:hover { background: #333333; }
+        
+        .preview-img { max-width: 120px; max-height: 120px; margin-top: 10px; display: block; border: 1px solid #000; object-fit: cover; }
+        
+        .post-list-item { background: #fff; border: 1px solid #000; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .post-info { flex: 1; }
+        .post-info h4 { font-size: 16px; color: #000; }
+        .delete-btn { background: #ff3333; color: #fff; border: none; padding: 6px 12px; font-weight: bold; cursor: pointer; }
+        .delete-btn:hover { background: #cc0000; }
+        
+        .back-link { display: inline-block; margin-bottom: 20px; color: #000; font-weight: bold; text-decoration: none; border-bottom: 1px solid #000; }
+        .back-link:hover { color: #555; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <a href="index.html" target="_blank" class="back-link">⬅ View Live Website (index.html)</a>
+        <h1>Admin Control Panel</h1>
+        
+        <!-- 1. Header Logo Upload Section -->
+        <div class="section-box">
+            <h2>1. Company Circular Logo (Header)</h2>
+            <div class="form-group">
+                <label>Upload Circular Logo (PNG/JPG):</label>
+                <input type="file" id="logoInput" accept="image/*">
+                <img id="logoPreview" class="preview-img" style="display:none;">
+            </div>
+            <button class="admin-btn" onclick="saveLogo()">Save Logo</button>
+        </div>
+
+        <!-- 2. New Arrival Banner Upload Section -->
+        <div class="section-box">
+            <h2>2. New Arrival Banner (Image or Video)</h2>
+            <div class="form-group">
+                <label>Upload Banner Media (Image / Video):</label>
+                <input type="file" id="bannerInput" accept="image/*,video/*">
+                <div id="bannerPreviewBox" style="margin-top:10px;"></div>
+            </div>
+            <button class="admin-btn" onclick="saveBanner()">Save New Arrival Banner</button>
+        </div>
+
+        <!-- 3. Unlimited Posts Management Section -->
+        <div class="section-box">
+            <h2>3. Add New Post (Unlimited Photos/Videos)</h2>
+            <div class="form-group">
+                <label>Post Title:</label>
+                <input type="text" id="postTitle" placeholder="Enter post title (e.g., 3D Acrylic Sign)">
+            </div>
+            <div class="form-group">
+                <label>Post Description:</label>
+                <textarea id="postDesc" placeholder="Enter post details..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Upload Post Media (Image / Video):</label>
+                <input type="file" id="postMediaInput" accept="image/*,video/*">
+            </div>
+            <button class="admin-btn" onclick="addNewPost()">Publish Post</button>
+        </div>
+
+        <!-- Existing Posts List -->
+        <div class="section-box">
+            <h2>Manage Published Posts</h2>
+            <div id="managePostsContainer">
+                <p style="color:#777;">No posts published yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to convert uploaded file into Base64 so it saves permanently in browser storage
+        function getBase64(file, callback) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                callback(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Save Logo Function
+        function saveLogo() {
+            const fileInput = document.getElementById('logoInput');
+            if (fileInput.files && fileInput.files[0]) {
+                getBase64(fileInput.files[0], function(base64Image) {
+                    let settings = JSON.parse(localStorage.getItem('adminSettings')) || {};
+                    settings.logo = base64Image;
+                    localStorage.setItem('adminSettings', JSON.stringify(settings));
+                    alert('Logo saved successfully!');
+                    loadAdminData();
+                });
+            } else {
+                alert('Please select a logo image first.');
+            }
+        }
+
+        // Save Banner Function
+        function saveBanner() {
+            const fileInput = document.getElementById('bannerInput');
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                getBase64(file, function(base64Data) {
+                    let settings = JSON.parse(localStorage.getItem('adminSettings')) || {};
+                    settings.banner = base64Data;
+                    settings.bannerType = file.type;
+                    localStorage.setItem('adminSettings', JSON.stringify(settings));
+                    alert('New Arrival Banner saved successfully!');
+                    loadAdminData();
+                });
+            } else {
+                alert('Please select a banner image or video first.');
+            }
+        }
+
+        // Add New Post Function
+        function addNewPost() {
+            const title = document.getElementById('postTitle').value;
+            const desc = document.getElementById('postDesc').value;
+            const fileInput = document.getElementById('postMediaInput');
+
+            if (!title && !fileInput.files[0]) {
+                alert('Please enter a title or upload media for the post.');
+                return;
+            }
+
+            let posts = JSON.parse(localStorage.getItem('adminPosts')) || [];
+
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                getBase64(file, function(base64Media) {
+                    const newPost = {
+                        id: Date.now(),
+                        title: title,
+                        description: desc,
+                        media: base64Media,
+                        type: file.type
+                    };
+                    posts.unshift(newPost); // Add to beginning
+                    localStorage.setItem('adminPosts', JSON.stringify(posts));
+                    alert('Post published successfully!');
+                    clearPostForm();
+                    loadAdminData();
+                });
+            } else {
+                const newPost = {
+                    id: Date.now(),
+                    title: title,
+                    description: desc,
+                    media: '',
+                    type: ''
+                };
+                posts.unshift(newPost);
+                localStorage.setItem('adminPosts', JSON.stringify(posts));
+                alert('Post published successfully!');
+                clearPostForm();
+                loadAdminData();
+            }
+        }
+
+        function clearPostForm() {
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postDesc').value = '';
+            document.getElementById('postMediaInput').value = '';
+        }
+
+        // Delete Post Function
+        function deletePost(id) {
+            let posts = JSON.parse(localStorage.getItem('adminPosts')) || [];
+            posts = posts.filter(post => post.id !== id);
+            localStorage.setItem('adminPosts', JSON.stringify(posts));
+            loadAdminData();
+        }
+
+        // Load Admin Data on Startup
+        function loadAdminData() {
+            const settings = JSON.parse(localStorage.getItem('adminSettings')) || {};
+            
+            // Preview Logo
+            const logoPreview = document.getElementById('logoPreview');
+            if (settings.logo) {
+                logoPreview.src = settings.logo;
+                logoPreview.style.display = 'block';
+            }
+
+            // Preview Banner
+            const bannerPreviewBox = document.getElementById('bannerPreviewBox');
+            if (settings.banner) {
+                if (settings.bannerType && settings.bannerType.includes('video')) {
+                    bannerPreviewBox.innerHTML = `<video src="${settings.banner}" style="max-width:200px; max-height:120px;" controls></video>`;
+                } else {
+                    bannerPreviewBox.innerHTML = `<img src="${settings.banner}" style="max-width:120px; max-height:120px; object-fit:cover; border:1px solid #000;">`;
+                }
+            }
+
+            // Load Manage Posts List
+            const manageContainer = document.getElementById('managePostsContainer');
+            const posts = JSON.parse(localStorage.getItem('adminPosts')) || [];
+
+            if (posts.length > 0) {
+                manageContainer.innerHTML = '';
+                posts.forEach(post => {
+                    const item = document.createElement('div');
+                    item.className = 'post-list-item';
+                    item.innerHTML = `
+                        <div class="post-info">
+                            <h4>${post.title || 'Untitled Post'}</h4>
+                            <p style="font-size:12px; color:#555;">${post.description ? post.description.substring(0, 50) + '...' : ''}</p>
+                        </div>
+                        <button class="delete-btn" onclick="deletePost(${post.id})">Delete</xbutton>
+                    `;
+                    manageContainer.appendChild(item);
+                });
+            } else {
+                manageContainer.innerHTML = `<p style="color:#777;">No posts published yet.</p>`;
+            }
+        }
+
+        window.onload = loadAdminData;
+    </script>
+</body>
+</html>
